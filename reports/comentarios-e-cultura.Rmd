@@ -1,5 +1,7 @@
 ---
 title: "Comentários e cultura"
+subtitle: "L2P1: Explorando marcas e canais"
+author: "Hugo Gabriel"
 output:
     html_document:
     df_print: paged
@@ -10,7 +12,7 @@ theme: sandstone
 library(tidyverse)
 library(here)
 library(viridis)
-source(here::here("code/lib.R"))
+source(here::here("code/import_data.R"))
 theme_set(theme_bw())
 
 knitr::opts_chunk$set(tidy = FALSE,
@@ -43,6 +45,20 @@ Considerando essa variável, queremos examinar a relação entre ela e o quão h
 ## Examinando essa relação
 
 Faça uma visualização que usa os princípios de eficácia no projeto de visualizações para facilitar as comparações que você acha que são as mais importantes para entendermos esse contexto. 
+
+```{r}
+dados %>%
+    ggplot(aes(x=comentaram_prop, y=PDI, color=Internet, size=usuarios)) +
+    geom_point()
+
+```
+
+```{r}
+dados %>%
+    ggplot(aes(x=comentaram_prop, y=PDI, size=Internet, color=usuarios)) +
+    geom_point(alpha=0.4)
+```
+
 
 ## Outras formas de ver
 
