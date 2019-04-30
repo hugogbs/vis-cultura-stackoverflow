@@ -49,9 +49,14 @@ Faça uma visualização que usa os princípios de eficácia no projeto de visua
 ```{r}
 dados %>%
     ggplot(aes(x=comentaram_prop, y=PDI, color=Internet, size=usuarios)) +
-    geom_point()
-
+    geom_point(alpha=0.9) +
+    scale_color_distiller(palette="Blues", direction=1) + 
+    labs(color="Internet", size="Usuários", x="Proporção de Comentários")
 ```
+
+## Outras formas de ver
+
+Em seguida, faça 5 visualizações que usem as mesmas variáveis e também pontos, mas que sejam **menos eficazes** que a que você escolheu acima. 
 
 ```{r}
 dados %>%
@@ -60,11 +65,33 @@ dados %>%
 ```
 
 
-## Outras formas de ver
+```{r}
+dados %>%
+    ggplot(aes(x=Internet, y=usuarios, size=comentaram_prop, color=PDI)) +
+    geom_point(alpha=0.4)
+```
 
-Em seguida, faça 5 visualizações que usem as mesmas variáveis e também pontos, mas que sejam **menos eficazes** que a que você escolheu acima. 
+```{r}
+dados %>%
+    mutate(Internet_dsc = cut(Internet, seq(0,100,25))) %>% 
+    mutate(usuarios_dsc = cut(usuarios, seq(min(usuarios), max(usuarios), (max(usuarios)-min(usuarios))/4))) %>% 
+    filter(!is.na(Internet_dsc)) %>%
+    ggplot(aes(x=comentaram_prop, y=PDI, shape=usuarios_dsc, color=Internet_dsc)) +
+    geom_point()
+    
+```
 
-## Bônus
 
-Inclua o continente dos países (`six_regions`) na visualização.
+
+```{r}
+dados %>%
+    ggplot(aes(x=comentaram_prop, y=PDI, color=Internet, size=usuarios)) +
+    geom_point(alpha=0.9) +
+        scale_color_distiller(palette = "Set1")
+```
+```{r}
+dados %>%
+    ggplot(aes(x=comentaram_prop, y=PDI, alpha=Internet, color=usuarios)) +
+    geom_point()
+```
 
